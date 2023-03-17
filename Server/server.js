@@ -1,12 +1,12 @@
 const io = require('socket.io')(4080);
 var Jogador = require('./Classes/Jogador');
-console.log('Servidor ligadão :)');
+console.log('Servidor ligadão!!!');
 
 var jogadores = [];
 var sockets = [];
 
 io.on('connection', function(socket) {
-    console.log('Conectaram!!!');
+    console.log('Conectaram :)');
     
     var jogador = new Jogador();
     var thisID = jogador.id;
@@ -23,11 +23,25 @@ io.on('connection', function(socket) {
         socket.emit('spaw', jogadores[playerID]);
       }
     }
+
+
+    socket.on('mover', function(jsonData) {
+      const data = JSON.parse(jsonData);
+
+      //console.log(data + 'jogador: ' + jogador.id);
+      //console.log(data.y);
+
+      jogador.position.x = data.x;
+      jogador.position.y = data.y;
+
+      socket.broadcast.emit('mover', jogador);
+    });
     
     socket.on('disconnect', function() {
-      console.log('Foram embora ):');
+      console.log('Desconectaram :(');
       delete jogadores[thisID];
       delete sockets[thisID];
       socket.broadcast.emit('disconnected', jogador)
     });
+    
 });

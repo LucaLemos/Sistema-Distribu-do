@@ -81,6 +81,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Codigo\Networking\ServerTalker.cs" />
+     <Compile Include="Assets\Codigo\Utility\Atributos\GreyOut.cs" />
+     <Compile Include="Assets\Codigo\Networking\ServerIdentity.cs" />
+     <Compile Include="Assets\Codigo\Jogador\JogadorManager.cs" />
+     <Compile Include="Assets\Codigo\Utility\UnityMainThreadDispatcher.cs" />
+     <Compile Include="Assets\Codigo\Networking\serverTest.cs" />
+     <Compile Include="Assets\Codigo\Networking\ServerTransform.cs" />
      <None Include="Assets\Packages\System.Xml.ReaderWriter.4.0.11\dotnet_library_license.txt" />
      <None Include="Assets\Packages\System.Collections.Concurrent.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Net.NameResolution.4.3.0\dotnet_library_license.txt" />
@@ -125,7 +131,6 @@
      <None Include="Assets\Packages\System.Security.Cryptography.Encoding.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.OpenSsl.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Collections.NonGeneric.4.3.0\dotnet_library_license.txt" />
-     <None Include="Assets\Packages\System.Net.Sockets.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Threading.Tasks.Extensions.4.5.4\lib\netstandard2.0\System.Threading.Tasks.Extensions.xml" />
      <None Include="Assets\Packages\System.Collections.Immutable.1.7.0\lib\netstandard2.0\System.Collections.Immutable.xml" />
      <None Include="Assets\Packages\System.Reflection.Emit.ILGeneration.4.0.1\dotnet_library_license.txt" />
@@ -200,6 +205,7 @@
      <None Include="Assets\Packages\System.Threading.Tasks.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Resources.ResourceManager.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Security.Cryptography.OpenSsl.4.3.0\ThirdPartyNotices.txt" />
+     <None Include="Assets\Packages\System.Net.Sockets.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Runtime.Serialization.Primitives.4.1.1\dotnet_library_license.txt" />
      <None Include="Assets\Packages\System.Collections.Immutable.1.7.0\version.txt" />
@@ -211,6 +217,7 @@
      <None Include="Assets\Packages\System.Security.Cryptography.Cng.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Security.Cryptography.Algorithms.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\runtime.rhel.7-x64.runtime.native.System.Security.Cryptography.OpenSsl.4.3.0\dotnet_library_license.txt" />
+     <None Include="Assets\Packages\System.Net.Sockets.4.3.0\dotnet_library_license.txt" />
      <None Include="Assets\Packages\System.Text.Encoding.Extensions.4.0.11\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Runtime.Numerics.4.3.0\dotnet_library_license.txt" />
      <None Include="Assets\Packages\runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl.4.3.0\ThirdPartyNotices.txt" />
@@ -237,7 +244,6 @@
      <None Include="Assets\Packages\System.Runtime.InteropServices.4.3.0\dotnet_library_license.txt" />
      <None Include="Assets\Packages\System.Runtime.InteropServices.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Reflection.4.3.0\ThirdPartyNotices.txt" />
-     <None Include="Assets\Packages\System.Net.Sockets.4.3.0\dotnet_library_license.txt" />
      <None Include="Assets\Packages\Microsoft.Win32.Primitives.4.3.0\dotnet_library_license.txt" />
      <None Include="Assets\Packages\runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl.4.3.0\ThirdPartyNotices.txt" />
      <None Include="Assets\Packages\System.Security.Cryptography.Primitives.4.3.0\dotnet_library_license.txt" />
@@ -493,9 +499,6 @@
     <Reference Include="UnityEditor.UnityConnectModule">
         <HintPath>D:\Unity\Hub\Editor\2021.3.20f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="SuperSocket.ClientEngine">
-        <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Assets\Packages\SuperSocket.ClientEngine.Core.0.10.0\lib\netstandard1.3\SuperSocket.ClientEngine.dll</HintPath>
-    </Reference>
     <Reference Include="SocketIoClientDotNet">
         <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Assets\Packages\SocketIoClientDotNet.Standard.0.0.6\lib\netstandard2.0\SocketIoClientDotNet.dll</HintPath>
     </Reference>
@@ -504,6 +507,9 @@
     </Reference>
     <Reference Include="System.Text.Encodings.Web">
         <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Assets\Packages\System.Text.Encodings.Web.7.0.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="WebSocket4Net">
+        <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Assets\Packages\WebSocket4Net.0.15.2\lib\netstandard1.3\WebSocket4Net.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.Immutable">
         <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Assets\Packages\System.Collections.Immutable.1.7.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
@@ -517,8 +523,8 @@
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
         <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="WebSocket4Net">
-        <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Assets\Packages\WebSocket4Net.0.15.2\lib\netstandard1.3\WebSocket4Net.dll</HintPath>
+    <Reference Include="SuperSocket.ClientEngine">
+        <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Assets\Packages\SuperSocket.ClientEngine.Core.0.10.0\lib\netstandard1.3\SuperSocket.ClientEngine.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces">
         <HintPath>D:\DownloadsD\Projetos\Distribuido\Sistema-Distribuido\jogoSymLink\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
