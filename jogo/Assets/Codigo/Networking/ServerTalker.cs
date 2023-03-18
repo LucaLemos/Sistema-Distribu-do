@@ -70,8 +70,7 @@ public class ServerTalker : MonoBehaviour
             float x = message.position.x;
             float y = message.position.y;
             
-            Action myAction = () =>
-            {
+            Action myAction = () => {
                 GameObject myGameObject = Instantiate(jogadorPrefab, networkContainer);
                 myGameObject.name = string.Format("Player: " + id);
                 myGameObject.transform.position = new Vector3(x, y, 0);
@@ -84,7 +83,6 @@ public class ServerTalker : MonoBehaviour
         });
 
         io.On("mover", (data) => {
-            //Debug.Log("move");
             var jsonString = data.ToString();
             var message = JsonSerializer.Deserialize<Jogador>(jsonString);
 
@@ -92,7 +90,7 @@ public class ServerTalker : MonoBehaviour
             float x = message.position.x;
             float y = message.position.y;
 
-            //Debug.Log(new Vector3(x, y, 0));
+            Debug.Log(new Vector3(x, y, 0));
 
             serverObjects[id].posi = new Vector3(x, y, 0);
         });

@@ -1,5 +1,5 @@
 module.exports = class Vector2 {
-    constructor(X = 0, Y = 0) {
+    constructor(X = 0.5, Y = 0.5) {
         this.x = X;
         this.y = Y;
     }

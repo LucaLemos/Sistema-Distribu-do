@@ -85,7 +85,6 @@
      <Compile Include="Assets\Codigo\Networking\ServerIdentity.cs" />
      <Compile Include="Assets\Codigo\Jogador\JogadorManager.cs" />
      <Compile Include="Assets\Codigo\Utility\UnityMainThreadDispatcher.cs" />
-     <Compile Include="Assets\Codigo\Networking\serverTest.cs" />
      <Compile Include="Assets\Codigo\Networking\ServerTransform.cs" />
      <None Include="Assets\Packages\System.Xml.ReaderWriter.4.0.11\dotnet_library_license.txt" />
      <None Include="Assets\Packages\System.Collections.Concurrent.4.3.0\ThirdPartyNotices.txt" />

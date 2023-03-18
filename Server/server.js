@@ -24,16 +24,16 @@ io.on('connection', function(socket) {
       }
     }
 
-
     socket.on('mover', function(jsonData) {
       const data = JSON.parse(jsonData);
-
+      
       //console.log(data + 'jogador: ' + jogador.id);
+      //console.log(data.x);
       //console.log(data.y);
-
+      
       jogador.position.x = data.x;
       jogador.position.y = data.y;
-
+      
       socket.broadcast.emit('mover', jogador);
     });
     
@@ -43,5 +43,4 @@ io.on('connection', function(socket) {
       delete sockets[thisID];
       socket.broadcast.emit('disconnected', jogador)
     });
-    
 });
