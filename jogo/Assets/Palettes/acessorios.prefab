@@ -1635,7 +1635,7 @@ GameObject:
   - component: {fileID: 5345497202215980454}
   - component: {fileID: 4049597532678357833}
   m_Layer: 0
-  m_Name: Top
+  m_Name: acessorios
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

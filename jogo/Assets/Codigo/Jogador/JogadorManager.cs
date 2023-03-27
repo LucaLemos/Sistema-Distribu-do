@@ -43,9 +43,13 @@ public class JogadorManager : MonoBehaviour {
     private void checkInput() {
         if(Vector3.Distance(transform.position, movePoint.position) <= 0.05f){
             if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f ) {
+                animator.SetFloat("X", Input.GetAxisRaw("Horizontal"));
+                animator.SetFloat("Y", Input.GetAxisRaw("Vertical"));
                 Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
                 makeMove(move);
             }else if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f ) {
+                animator.SetFloat("X", Input.GetAxisRaw("Horizontal"));
+                animator.SetFloat("Y", Input.GetAxisRaw("Vertical"));
                 Vector3 move  = new Vector3(0, Input.GetAxisRaw("Vertical"), 0);
                 makeMove(move);
             }else {
@@ -56,8 +60,7 @@ public class JogadorManager : MonoBehaviour {
 
     private void makeMove(Vector3 vec) {
         if(!Physics2D.OverlapCircle(movePoint.position + vec, 0.2f, stopMovement)) {
-            animator.SetFloat("X", Input.GetAxisRaw("Horizontal"));
-            animator.SetFloat("Y", Input.GetAxisRaw("Vertical"));
+            
             animator.SetBool("Moving", true);
             movePoint.position += vec;
         }

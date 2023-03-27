@@ -16,6 +16,9 @@ public class ServerTalker : MonoBehaviour
     private Transform networkContainer;
     [SerializeField]
     private GameObject jogadorPrefab;
+    [Header("GameManager")]
+    [SerializeField]
+    private GameManager gameManager;
 
     public static string ClientID {get; private set;}
     private Dictionary<string, JogadorManager> serverObjects;
@@ -43,6 +46,10 @@ public class ServerTalker : MonoBehaviour
 
     private void inicializar() {
         serverObjects = new Dictionary<string, JogadorManager>();
+
+        ServerIdentity si = gameManager.GetComponent<ServerIdentity>();
+        si.SetSocketReference(this.io);
+        si.SetControllerID("Ta ligado");
     }
 
     private void eventos() {
@@ -93,6 +100,18 @@ public class ServerTalker : MonoBehaviour
             Debug.Log(new Vector3(x, y, 0));
 
             serverObjects[id].posi = new Vector3(x, y, 0);
+        });
+
+        io.On("Explosion", (data) => {
+            var jsonString = data.ToString();
+            var message = JsonSerializer.Deserialize<Position>(jsonString);
+
+            Action myAction = () => {
+                gameManager.GameExplosion(new Vector3(message.x, message.y, 0));
+            };
+            RunOnMainThread.Enqueue(myAction);
+            
+            Debug.Log("Explodiu: " + message.x + " = " + message.y);
         });
         
         io.On("disconnected", (data) => {
