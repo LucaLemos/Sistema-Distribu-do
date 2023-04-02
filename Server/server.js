@@ -40,13 +40,8 @@ io.on('connection', function(socket) {
     socket.on('Explosion', function(jsonData) {
       const data = JSON.parse(jsonData);
       
-      console.log('funciona');
-
-      console.log(data);
-      //console.log(data.y);
-      
-      //jogador.position.x = data.x;
-      //jogador.position.y = data.y;
+      //console.log('funciona');
+      //console.log(data);
       
       socket.broadcast.emit('Explosion', data);
     });

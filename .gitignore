@@ -314,3 +314,6 @@ sysinfo.txt
 *.unitypackage
 UnityExtension/**/manifest.json
 tests/IntegrationTests/IOTestsRepo/
+
+
+jogoSymLink/
