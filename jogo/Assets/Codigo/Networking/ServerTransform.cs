@@ -13,7 +13,7 @@ public class ServerTransform : MonoBehaviour {
     private Jogador jogador;
 
     private float updateTimer = 0f;
-    private const float updateInterval = 0.5f;
+    private const float updateInterval = 0f;
 
     void Start() {
         serverIdentity = GetComponent<ServerIdentity>();
