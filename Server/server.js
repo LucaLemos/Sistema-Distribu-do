@@ -54,7 +54,7 @@ io.on('connection', function(socket) {
     socket.emit('getCard', cartas[0]);
     socket.emit('getCard', cartas[1]);
     socket.emit('getCard', cartas[2]);
-    socket.emit('getPorta', cartas[2]);
+    //socket.emit('getPorta', cartas[2]);
 
     socket.on('mover', function(jsonData) {
       const data = JSON.parse(jsonData);
@@ -62,7 +62,7 @@ io.on('connection', function(socket) {
       jogador.position.x = data.x;
       jogador.position.y = data.y;
 
-      console.log(data);
+      //console.log(data);
       
       socket.broadcast.emit('mover', jogador);
     });
@@ -77,11 +77,16 @@ io.on('connection', function(socket) {
       const data = JSON.parse(jsonData);
       
       jogadores[data.id].dealEffect(data.power);
-      //console.log(data);
-      //console.log(jogadores[data.id]);
-
       socket.emit('effect', jogadores[data.id]);
       socket.broadcast.emit('effect', jogadores[data.id]);
+    });
+
+    socket.on('effectMonster', function(jsonData) {
+      const data = JSON.parse(jsonData);
+      //console.log(data)
+      
+      socket.emit('effectMonster', data);
+      socket.broadcast.emit('effectMonster', data);
     });
     
     socket.on('disconnect', function() {

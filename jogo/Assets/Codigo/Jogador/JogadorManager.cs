@@ -17,13 +17,11 @@ public class JogadorManager : MonoBehaviour {
     public LayerMask stopMovement;
     private Animator animator;
 
-    [Header("Class")]
+    [Header("Server Identity")]
     [SerializeField]
     private ServerIdentity serverIdentity;
 
     void Start() {
-        //movePoint.parent = null;
-        //movePoint.name = this.name;
         posi = transform.position;
         posiAndar = transform.position;
         animator = GetComponent<Animator>();

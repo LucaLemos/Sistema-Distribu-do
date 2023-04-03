@@ -94,6 +94,11 @@ public class ServerTalker : MonoBehaviour
                 jm.power = message.power;
                 jm.atualizaNome();
 
+                if(id == gameManager.GetComponent<ServerIdentity>().GetID()) {
+                    UiInventoryController ic = myGameObject.GetComponent<UiInventoryController>();
+                    ic.inventoryPage = gameManager.inventoryPage;
+                }
+
                 serverObjects.Add(id, jm);
             };
             RunOnMainThread.Enqueue(myAction);
@@ -155,6 +160,16 @@ public class ServerTalker : MonoBehaviour
                 jm.level = message.level;
                 jm.power = message.power;
                 jm.atualizaNome();
+            };
+            RunOnMainThread.Enqueue(myAction);
+        });
+
+        io.On("effectMonster", (data) => {
+            var jsonString = data.ToString();
+            var message = JsonSerializer.Deserialize<Efeito>(jsonString);
+
+            Action myAction = () => {
+                gameManager.EffectMonster(message.power);
             };
             RunOnMainThread.Enqueue(myAction);
         });

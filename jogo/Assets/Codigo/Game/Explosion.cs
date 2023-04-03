@@ -19,14 +19,23 @@ public class Explosion : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         ServerIdentity si = collision.gameObject.GetComponent<ServerIdentity>();
         if(Power != 0) {
-            if(si != null && si.GetID() != "") {
-            //Debug.Log(si.GetID());
-            //Debug.Log(Power);
-            Efeito effect = new Efeito();
-            effect.id = si.GetID();
-            effect.power = Power;
+            if(si != null && si.GetID() != "" && si.GetID() != "1") {
+                //Debug.Log(si.GetID());
 
-            serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(effect));
+                Efeito effect = new Efeito();
+                effect.id = si.GetID();
+                effect.power = Power;
+
+                serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(effect));
+            }
+            else if(si.GetID() == "1") {
+                //Debug.Log(si.GetID());
+
+                Efeito effect = new Efeito();
+                effect.id = si.GetID();
+                effect.power = Power;
+
+                serverIdentity.GetSocket().Emit("effectMonster", JsonSerializer.Serialize(effect));
             }
         }
     }

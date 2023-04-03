@@ -6,29 +6,35 @@ using UnityEngine;
 using UnityEditor;
 
 public class Card : MonoBehaviour {
-
     private SpriteRenderer spriteRenderer;
+    [Header("Dados")]
+    [GreyOut]
     public string SpriteName;
+    [GreyOut]
     public string Type;
+    [GreyOut]
     public int Power;
+    [GreyOut]
     public bool Effect;
+    [GreyOut]
     public bool Equip;
+    [GreyOut]
     public bool Monster;
+    [GreyOut]
     public int Treasure;
+    [GreyOut]
     public int Level;
 
-    private GameManager gm;
-    public bool porta;
+    public GameManager gm;
     public int handIndex;
+    public bool porta;
 
     bool isMouseOver = false;
     private bool isDragging = false;
-    private Vector3 startPosition;
+    public bool isActive = false;
 
     private void Start() {
-        // Get the child object using its name
         GameObject childObject = transform.Find("Image").gameObject;
-        // Get the SpriteRenderer component on the child object
         spriteRenderer = childObject.GetComponent<SpriteRenderer>();
 
         string path = "Assets/Sprites/CardsImage/" + SpriteName;
@@ -50,21 +56,23 @@ public class Card : MonoBehaviour {
     void Update()
     {
         if (Effect && isMouseOver && Input.GetMouseButtonDown(1)) {
-            Debug.Log("Right mouse button clicked over object!");
-
-            Efeito effect = new Efeito();
-            effect.id = gm.serverIdentity.GetID();
-            effect.power = Power;
-            gm.serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(effect));
-            Destroy(gameObject);
-            // Code to execute when the right mouse button is pressed over the object
+            if(isDragging) {
+                isDragging = false;
+                transform.position = gm.PosiSlot(handIndex);
+            }else {
+                Efeito effect = new Efeito();
+                effect.id = gm.serverIdentity.GetID();
+                effect.power = Power;
+                gm.serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(effect));
+                gm.FreeSlot(handIndex);
+                Destroy(gameObject);
+            }
         }
     }
 
     void OnMouseDown() {
         if(!porta) {
             isDragging = true;
-            startPosition = transform.position;
         }
     }
 
@@ -81,19 +89,20 @@ public class Card : MonoBehaviour {
 
     void OnMouseUp() {
         if(!porta) {
-            if(Effect) {
+            if(Effect && isDragging && isActive) {
                 isDragging = false;
-                gm.availableCardsSlots[handIndex] = true;
-                gameObject.SetActive(false);
-    
+
                 Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
                 Vector3 objectPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-    
+
+                gm.availableCardsSlots[handIndex] = true;
                 gm.EmitExplosion(objectPosition, Power);
                 gm.GameExplosion(objectPosition, Power);
+                gm.FreeSlot(handIndex);
                 Destroy(gameObject);
+            }else {
+                transform.position = gm.PosiSlot(handIndex);
             }
-            transform.position = startPosition;
         }
     }
 

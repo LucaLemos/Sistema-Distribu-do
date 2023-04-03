@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 7949767383621221352}
   - component: {fileID: 6958917690234736354}
   - component: {fileID: -5014598922394862486}
+  - component: {fileID: 6790422270605053937}
   - component: {fileID: 660179872}
   - component: {fileID: 660179871}
   - component: {fileID: 3780098165075502254}
@@ -82,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 
-  Controlavel: 0
+  Controlavel: 1
 --- !u!114 &-5014598922394862486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +103,20 @@ MonoBehaviour:
   stopMovement:
     serializedVersion: 2
     m_Bits: 256
+  serverIdentity: {fileID: 6958917690234736354}
+--- !u!114 &6790422270605053937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174547758111117820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68ed478bb4e653c4da1169a6f90c6dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryPage: {fileID: 0}
   serverIdentity: {fileID: 6958917690234736354}
 --- !u!212 &660179872
 SpriteRenderer:
@@ -143,7 +158,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 916239272, guid: 9572a539fdad2eb4e9d09dadee8fd70a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -280,7 +295,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 5
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1544415478742248554
 MonoBehaviour:
