@@ -1,13 +1,40 @@
 const io = require('socket.io')(4080);
+const fs = require('fs');
+var Carta = require('./Classes/Carta');
 var Jogador = require('./Classes/Jogador');
 console.log('Servidor ligadão!!!');
 
 var jogadores = [];
 var sockets = [];
+var cartas = [];
+
+fs.readFile('Json/Cards.json', 'utf8', (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  const myList = JSON.parse(data);
+
+  myList.forEach(item => {
+    const cardTest = new Carta();
+    cardTest.id = item.id;
+    cardTest.image = item.image;
+    cardTest.type = item.type;
+    cardTest.power = item.power;
+    cardTest.effect = item.effect;
+    cardTest.equip = item.equip;
+    cardTest.monster = item.monster;
+    cardTest.treasure = item.treasure;
+    cardTest.level = item.level;
+    cartas.push(cardTest);
+  });
+});
+
 
 io.on('connection', function(socket) {
     console.log('Conectaram :)');
-    
+
     var jogador = new Jogador();
     var thisID = jogador.id;
 
@@ -24,32 +51,43 @@ io.on('connection', function(socket) {
       }
     }
 
+    socket.emit('getCard', cartas[0]);
+    socket.emit('getCard', cartas[1]);
+    socket.emit('getCard', cartas[2]);
+    socket.emit('getPorta', cartas[2]);
+
     socket.on('mover', function(jsonData) {
       const data = JSON.parse(jsonData);
       
-      //console.log(data + 'jogador: ' + jogador.id);
-      //console.log(data.x);
-      //console.log(data.y);
-      
       jogador.position.x = data.x;
       jogador.position.y = data.y;
+
+      console.log(data);
       
       socket.broadcast.emit('mover', jogador);
     });
 
-    socket.on('Explosion', function(jsonData) {
+    socket.on('explosion', function(jsonData) {
       const data = JSON.parse(jsonData);
       
-      //console.log('funciona');
-      //console.log(data);
+      socket.broadcast.emit('explosion', data);
+    });
+
+    socket.on('effect', function(jsonData) {
+      const data = JSON.parse(jsonData);
       
-      socket.broadcast.emit('Explosion', data);
+      jogadores[data.id].dealEffect(data.power);
+      //console.log(data);
+      //console.log(jogadores[data.id]);
+
+      socket.emit('effect', jogadores[data.id]);
+      socket.broadcast.emit('effect', jogadores[data.id]);
     });
     
     socket.on('disconnect', function() {
       console.log('Desconectaram :(');
       delete jogadores[thisID];
       delete sockets[thisID];
-      socket.broadcast.emit('disconnected', jogador)
+      socket.broadcast.emit('disconnected', jogador);
     });
 });

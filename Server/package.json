@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "http": "^0.0.1-security",
     "nodemon": "^2.0.21",
     "shortid": "^2.2.16",
     "socket.io": "^2.5.0"

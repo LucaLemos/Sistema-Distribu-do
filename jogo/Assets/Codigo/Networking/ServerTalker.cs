@@ -40,8 +40,6 @@ public class ServerTalker : MonoBehaviour
                 action?.Invoke();
             }
         }
-
-
     }  
 
     private void inicializar() {
@@ -49,7 +47,6 @@ public class ServerTalker : MonoBehaviour
 
         ServerIdentity si = gameManager.GetComponent<ServerIdentity>();
         si.SetSocketReference(this.io);
-        si.SetControllerID("Ta ligado");
     }
 
     private void eventos() {
@@ -67,6 +64,12 @@ public class ServerTalker : MonoBehaviour
 
             ClientID = message.id;
 	        Debug.Log("Seu id e: " + ClientID);
+
+            Action myAction = () => {
+                ServerIdentity si = gameManager.GetComponent<ServerIdentity>();
+                si.SetID(ClientID);
+            };
+            RunOnMainThread.Enqueue(myAction);
         });
 
         io.On("spaw", (data) => {
@@ -81,10 +84,17 @@ public class ServerTalker : MonoBehaviour
                 GameObject myGameObject = Instantiate(jogadorPrefab, networkContainer);
                 myGameObject.name = string.Format("Player: " + id);
                 myGameObject.transform.position = new Vector3(x, y, 0);
+
                 ServerIdentity si = myGameObject.GetComponent<ServerIdentity>();
                 si.SetControllerID(id);
                 si.SetSocketReference(this.io);
-                serverObjects.Add(id, myGameObject.GetComponent<JogadorManager>());
+
+                JogadorManager jm = myGameObject.GetComponent<JogadorManager>();
+                jm.level = message.level;
+                jm.power = message.power;
+                jm.atualizaNome();
+
+                serverObjects.Add(id, jm);
             };
             RunOnMainThread.Enqueue(myAction);
         });
@@ -97,21 +107,56 @@ public class ServerTalker : MonoBehaviour
             float x = message.position.x;
             float y = message.position.y;
 
-            Debug.Log(new Vector3(x, y, 0));
+            //Debug.Log("andou aqui");
+            //Debug.Log(new Vector3(x, y, 0));
 
-            serverObjects[id].posi = new Vector3(x, y, 0);
+            serverObjects[id].posiAndar = new Vector3(x, y, 0);
         });
 
-        io.On("Explosion", (data) => {
+        io.On("getCard", (data) => {
             var jsonString = data.ToString();
-            var message = JsonSerializer.Deserialize<Position>(jsonString);
-
+            var message = JsonSerializer.Deserialize<Carta>(jsonString);
+            
             Action myAction = () => {
-                gameManager.GameExplosion(new Vector3(message.x, message.y, 0));
+                gameManager.DrawCard(message);
             };
             RunOnMainThread.Enqueue(myAction);
+        });
+
+        io.On("getPorta", (data) => {
+            var jsonString = data.ToString();
+            var message = JsonSerializer.Deserialize<Carta>(jsonString);
             
-            Debug.Log("Explodiu: " + message.x + " = " + message.y);
+            Action myAction = () => {
+                gameManager.DrawPort(message);
+            };
+            RunOnMainThread.Enqueue(myAction);
+        });
+
+        io.On("explosion", (data) => {
+            var jsonString = data.ToString();
+            var message = JsonSerializer.Deserialize<Efeito>(jsonString);
+            
+            Action myAction = () => {
+                gameManager.GameExplosion(new Vector3(message.position.x, message.position.y, 0), 0);
+            };
+            RunOnMainThread.Enqueue(myAction);
+        });
+
+        io.On("effect", (data) => {
+            var jsonString = data.ToString();
+            var message = JsonSerializer.Deserialize<Efeito>(jsonString);
+
+            //Debug.Log("enffect entrou");
+            //Debug.Log(message.id);
+
+            Action myAction = () => {
+                JogadorManager jm = serverObjects[message.id];
+                jm.level = message.level;
+                jm.power = message.power;
+                jm.atualizaNome();
+            };
+            RunOnMainThread.Enqueue(myAction);
         });
         
         io.On("disconnected", (data) => {
@@ -139,11 +184,34 @@ public class Jogador {
         public string id { get; set; }
         public string username { get; set; }
         public Position position { get; set; }
+        public int power { get; set; }
+        public int level { get; set; }
 }
 
 [Serializable]
 public class Position {
         public float x { get; set; }
         public float y { get; set; }
+}
+
+[Serializable]
+public class Carta {
+        public string id { get; set; }
+        public string image { get; set; }
+        public string type { get; set; }
+        public int power { get; set; }
+        public bool effect { get; set; }
+        public bool equip { get; set; }
+        public bool monster { get; set; }
+        public int treasure { get; set; }
+        public int level { get; set; }
+}
+
+[Serializable]
+public class Efeito {
+        public string id { get; set; }
+        public int power { get; set; }
+        public int level { get; set; }
+        public Position position { get; set; }
 }
 

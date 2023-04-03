@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
+using TMPro;
 using UnityEngine;
 
 public class JogadorManager : MonoBehaviour {
 
     [Header("Dados")]
     [SerializeField]
+    public int level;
+    public int power;
     private float speed = 5;
-    public Transform movePoint;
+    //public Transform movePoint;
     public Vector3 posi;
+    public Vector3 posiAndar;
     public LayerMask stopMovement;
     private Animator animator;
 
@@ -17,22 +22,22 @@ public class JogadorManager : MonoBehaviour {
     private ServerIdentity serverIdentity;
 
     void Start() {
-        movePoint.parent = null;
-        movePoint.name = this.name;
+        //movePoint.parent = null;
+        //movePoint.name = this.name;
         posi = transform.position;
+        posiAndar = transform.position;
         animator = GetComponent<Animator>();
     }
 
     void Update() {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, posiAndar, speed * Time.deltaTime);
 
         if(serverIdentity.IsControlavel()) {
             checkInput();
         }else {
-            movePoint.position = posi;
-            if(transform.position != movePoint.position) {
-                animator.SetFloat("X", movePoint.position.x - transform.position.x);
-                animator.SetFloat("Y",  movePoint.position.y - transform.position.y);
+            if(transform.position != posiAndar) {
+                animator.SetFloat("X", posiAndar.x - transform.position.x);
+                animator.SetFloat("Y",  posiAndar.y - transform.position.y);
                 animator.SetBool("Moving", true);
             }else {
                 animator.SetBool("Moving", false);
@@ -41,7 +46,7 @@ public class JogadorManager : MonoBehaviour {
     }
 
     private void checkInput() {
-        if(Vector3.Distance(transform.position, movePoint.position) <= 0.05f){
+        if(Vector3.Distance(transform.position, posiAndar) <= 0.05f){
             if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f ) {
                 animator.SetFloat("X", Input.GetAxisRaw("Horizontal"));
                 animator.SetFloat("Y", Input.GetAxisRaw("Vertical"));
@@ -59,10 +64,20 @@ public class JogadorManager : MonoBehaviour {
     }
 
     private void makeMove(Vector3 vec) {
-        if(!Physics2D.OverlapCircle(movePoint.position + vec, 0.2f, stopMovement)) {
-            
+        if(!Physics2D.OverlapCircle(posiAndar + vec, 0.2f, stopMovement)) {
             animator.SetBool("Moving", true);
-            movePoint.position += vec;
+            posiAndar += vec;
+
+            Position andando = new Position();
+            andando.x = posiAndar.x;
+            andando.y = posiAndar.y;
+            serverIdentity.GetSocket().Emit("mover", JsonSerializer.Serialize(andando));
         }
+    }
+
+    public void atualizaNome() {
+        GameObject childObject = transform.Find("Nome").gameObject;
+        TMP_Text textMash = childObject.GetComponent<TMP_Text>();
+        textMash.text = "LV:" + level + " Pw:" + power;
     }
 }

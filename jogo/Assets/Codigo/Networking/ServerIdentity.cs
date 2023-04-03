@@ -24,6 +24,10 @@ public class ServerIdentity : MonoBehaviour {
         Controlavel = (ServerTalker.ClientID == ID) ? true : false;
     }
 
+    public void SetID(string id) {
+        ID = id;
+    }
+
     public void SetSocketReference(Socket socket) {
         io = socket;
     }
@@ -32,11 +36,10 @@ public class ServerIdentity : MonoBehaviour {
         return ID;
     }
 
-    public bool IsControlavel() {
-        return Controlavel;
-    }
-
     public Socket GetSocket() {
         return io;
+    }
+    public bool IsControlavel() {
+        return Controlavel;
     }
 }
