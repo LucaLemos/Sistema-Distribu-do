@@ -63,10 +63,12 @@ module.exports = class Servidor {
         let gamelobbies = server.lobbys.filter(item => {
             return item instanceof GameLobby
         });
-        console.log("Numero de Lobbies: " + gamelobbies.length);
-
+        
         gamelobbies.forEach(lobby => {
+            console.log("lobbd");
             if(!lobbyFound) {
+                console.log("achou um lobby");
+                console.log(lobby.canEnterLobby(connection));
                 let canJoin = lobby.canEnterLobby(connection);
 
                 if(canJoin) {
@@ -78,7 +80,7 @@ module.exports = class Servidor {
 
         if(!lobbyFound) {
             console.log("Criando um novo lobby");
-            let gamelobby = new GameLobby(gamelobbies.length + 1, new GameLobbySetting('Padrao', 2), server.cards);
+            let gamelobby = new GameLobby(gamelobbies.length + 2, new GameLobbySetting('Padrao', 1), server.cards);
             server.lobbys.push(gamelobby);
             server.onSwitchLobby(connection, gamelobby.id);
         }

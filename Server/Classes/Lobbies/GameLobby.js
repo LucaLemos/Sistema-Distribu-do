@@ -72,6 +72,8 @@ module.exports = class gmaeLobby extends LobbyBase {
         let maxPlayerCount = lobby.settings.maxPlayers;
         let currentPlayerCount = lobby.connections.length;
 
+        console.log(maxPlayerCount);
+        console.log(currentPlayerCount);
         if(currentPlayerCount + 1 > maxPlayerCount) {
             return false;
         }
