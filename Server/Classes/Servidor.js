@@ -93,8 +93,6 @@ module.exports = class Servidor {
         connection.lobby = lobbys[lobbyID];
 
         lobbys[connection.player.lobby].onLeaveLobby(connection);
-        console.log(lobbyID);
-        console.log(connection);
         lobbys[lobbyID].onEnterLobby(connection);
     }
 }
