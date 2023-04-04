@@ -25,22 +25,6 @@ public class GameManager : MonoBehaviour
     public GameObject cardPrefab;
     public GameObject explosionPrefab;
 
-    //public void DrawCard() {
-    //    if(deck.Count >= 1) {
-    //        Card randCard = deck[Random.Range(0, deck.Count)];
-    //        for(int i = 0; i < availableCardsSlots.Length; i++) {
-    //            if(availableCardsSlots[i] == true) {
-    //                randCard.gameObject.SetActive(true);
-    //                randCard.handIndex = i;
-    //                randCard.transform.position = cardSlots[i].position;
-    //                availableCardsSlots[i] = false;
-    //                deck.Remove(randCard);
-    //                return;
-    //            }
-    //        }
-    //    }
-    //}
-
     public void DrawCard(Carta cartaData) {
         for(int i = 0; i < availableCardsSlots.Length; i++) {
             if(availableCardsSlots[i] == true) {

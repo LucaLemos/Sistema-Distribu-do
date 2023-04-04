@@ -10,11 +10,4 @@ module.exports = class Carta {
         this.treasure = new Number(0);
         this.level = new Number(0);
     }
-
-    typePorta(tipo = string) {
-        this.type = "Porta"
-    }
-    typeTesouro(tipo = string) {
-        this.type = "Tesouro"
-    }
 }

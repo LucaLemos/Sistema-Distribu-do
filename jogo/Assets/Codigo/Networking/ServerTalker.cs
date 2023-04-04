@@ -104,7 +104,7 @@ public class ServerTalker : MonoBehaviour
             RunOnMainThread.Enqueue(myAction);
         });
 
-        io.On("mover", (data) => {
+        io.On("move", (data) => {
             var jsonString = data.ToString();
             var message = JsonSerializer.Deserialize<Jogador>(jsonString);
 
@@ -113,9 +113,9 @@ public class ServerTalker : MonoBehaviour
             float y = message.position.y;
 
             //Debug.Log("andou aqui");
-            //Debug.Log(new Vector3(x, y, 0));
-
+            //Debug.Log(id);
             serverObjects[id].posiAndar = new Vector3(x, y, 0);
+
         });
 
         io.On("getCard", (data) => {
@@ -152,9 +152,6 @@ public class ServerTalker : MonoBehaviour
             var jsonString = data.ToString();
             var message = JsonSerializer.Deserialize<Efeito>(jsonString);
 
-            //Debug.Log("enffect entrou");
-            //Debug.Log(message.id);
-
             Action myAction = () => {
                 JogadorManager jm = serverObjects[message.id];
                 jm.level = message.level;
@@ -178,15 +175,17 @@ public class ServerTalker : MonoBehaviour
             var jsonString = data.ToString();
             var message = JsonSerializer.Deserialize<Jogador>(jsonString);
 
-            string id = message.id;
-
             Action myAction = () => {
-                GameObject myGameObject = serverObjects[id].gameObject;
-                Destroy(myGameObject);
-                serverObjects.Remove(id);
+                JogadorManager jm = serverObjects[message.id];
+                serverObjects.Clear();
+                DestroyImmediate(jm.gameObject);
             };
             RunOnMainThread.Enqueue(myAction);
         });        
+    }
+
+    public void AttemptToJoinLobby() {
+        io.Emit("joinGame");
     }
 
     void OnDestroy() {

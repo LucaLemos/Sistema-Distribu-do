@@ -29,8 +29,8 @@ public class Card : MonoBehaviour {
     public int handIndex;
     public bool porta;
 
-    bool isMouseOver = false;
-    private bool isDragging = false;
+    public bool isMouseOver = false;
+    public bool isDragging = false;
     public bool isActive = false;
 
     private void Start() {
@@ -55,11 +55,11 @@ public class Card : MonoBehaviour {
 
     void Update()
     {
-        if (Effect && isMouseOver && Input.GetMouseButtonDown(1)) {
+        if (isMouseOver && Input.GetMouseButtonDown(1)) {
             if(isDragging) {
                 isDragging = false;
                 transform.position = gm.PosiSlot(handIndex);
-            }else {
+            }else if(Effect) {
                 Efeito effect = new Efeito();
                 effect.id = gm.serverIdentity.GetID();
                 effect.power = Power;
@@ -71,8 +71,9 @@ public class Card : MonoBehaviour {
     }
 
     void OnMouseDown() {
+        //Debug.Log("apertou");
         if(!porta) {
-            isDragging = true;
+        isDragging = true;
         }
     }
 
@@ -101,6 +102,7 @@ public class Card : MonoBehaviour {
                 gm.FreeSlot(handIndex);
                 Destroy(gameObject);
             }else {
+                isDragging = false;
                 transform.position = gm.PosiSlot(handIndex);
             }
         }

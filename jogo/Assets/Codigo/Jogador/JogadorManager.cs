@@ -69,7 +69,7 @@ public class JogadorManager : MonoBehaviour {
             Position andando = new Position();
             andando.x = posiAndar.x;
             andando.y = posiAndar.y;
-            serverIdentity.GetSocket().Emit("mover", JsonSerializer.Serialize(andando));
+            serverIdentity.GetSocket().Emit("move", JsonSerializer.Serialize(andando));
         }
     }
 
