@@ -25,8 +25,8 @@ public class ServerTalker : MonoBehaviour
 
     void Start()
     {
-        //io = IO.Socket("http://localhost:4080"); 
-        io = IO.Socket("http://192.168.68.137:4080"); 
+        io = IO.Socket("http://localhost:4080"); 
+        //io = IO.Socket("http://192.168.68.139:4080"); 
         inicializar();
         eventos();
 
