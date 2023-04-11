@@ -1,0 +1,13 @@
+[  
+    {    
+        "id": "yuno",
+        "image": "yuno.jpg",
+        "deck": "Porta",
+        "type": "Monster",
+        "body": "",
+        "big": false,
+        "treasure": 2,
+        "level": 1,
+        "power": 5
+    }
+]

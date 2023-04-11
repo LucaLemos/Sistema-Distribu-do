@@ -11,79 +11,90 @@ public class GameManager : MonoBehaviour
     public ServerIdentity serverIdentity;
 
     [Header("Cards")]
-    public Transform cards;
     public Transform porta;
-    public bool availablePorta;
-    public Transform[] cardSlots;
-    public bool[] availableCardsSlots;
+    private bool availablePorta = true;
+    public CardSlotNew[] hand;
 
-    [Header("Inventario")]
-    [SerializeField]
-    public UiInventoryPage inventoryPage;
     
     [Header("Prefab")]
     public GameObject cardPrefab;
     public GameObject explosionPrefab;
 
     public void DrawCard(Carta cartaData) {
-        for(int i = 0; i < availableCardsSlots.Length; i++) {
-            if(availableCardsSlots[i] == true) {
+        for(int i = 0; i < hand.Length; i++) {
+            CardSlotNew slot = hand[i];
+            DragAndDrop itemInSlot = slot.GetComponentInChildren<DragAndDrop>();
+            if(itemInSlot == null) {
                 Quaternion rotation = Quaternion.identity;
-                GameObject prefab = Instantiate(cardPrefab, cards);
-                Card card = prefab.GetComponent<Card>();
+
+                GameObject prefab = Instantiate(cardPrefab, slot.transform);
+                DragAndDrop card = prefab.GetComponent<DragAndDrop>();
+
+                card.Id = cartaData.id;
                 card.SpriteName = cartaData.image;
-                card.Power = cartaData.power;
+                card.Deck = cartaData.deck;
                 card.Type = cartaData.type;
-                card.Effect = cartaData.effect;
+                card.Body = cartaData.body;
+                card.Big = cartaData.big;
+                card.Treasure = cartaData.treasure;
+                card.Level = cartaData.level;
+                card.Power = cartaData.power;
+
                 card.porta = false;
                 card.atualiza();
                 card.handIndex = i;
-                card.transform.position = PosiSlot(i);
-                availableCardsSlots[i] = false;
+                
                 return;
             }
         }
+    }
+    public void DrawHand(){
+        Debug.Log("apertouMao");
+        serverIdentity.GetSocket().Emit("getCardTesouro");
+        //serverIdentity.GetSocket().Emit("getCardTesouro");
+        //serverIdentity.GetSocket().Emit("getCardTesouro");
+        //serverIdentity.GetSocket().Emit("getCardPorta");
+        //serverIdentity.GetSocket().Emit("getCardPorta");
+        //serverIdentity.GetSocket().Emit("getCardPorta");
     }
 
     public void DrawPort(Carta cartaData) {
         if(availablePorta == true) {
             Quaternion rotation = Quaternion.identity;
+
             GameObject prefab = Instantiate(cardPrefab, porta);
+            DragAndDrop card = prefab.GetComponent<DragAndDrop>();
             prefab.name = "CartaPorta";
             ServerIdentity si = prefab.GetComponent<ServerIdentity>();
             si.SetSocketReference(serverIdentity.GetSocket());
-            si.SetID(cartaData.id);
-            Card card = prefab.GetComponent<Card>();
+            si.SetID("1");
+
+            card.Id = cartaData.id;
             card.SpriteName = cartaData.image;
+            card.Deck = cartaData.deck;
             card.Type = cartaData.type;
-            card.Power = cartaData.power;
-            card.Effect = cartaData.effect;
-            card.Equip = cartaData.equip;
-            card.Monster = cartaData.monster;
+            card.Body = cartaData.body;
+            card.Big = cartaData.big;
             card.Treasure = cartaData.treasure;
             card.Level = cartaData.level;
+            card.Power = cartaData.power;
+
             card.porta = true;
             card.atualiza();
-            card.transform.position = porta.position;
             availablePorta = false;
+                
             return;
         }
     }
-
-    public Vector3 PosiSlot(int index) {
-        return cardSlots[index].position;
-    }
-
-    public void FreeSlot(int index) {
-        CardSlot cs = cardSlots[index].GetComponent<CardSlot>();
-        cs.ocupado = false;
+    public void DrawPortEmit(){
+        Debug.Log("apertouPorta");
+        serverIdentity.GetSocket().Emit("getPorta");
     }
 
     public void EffectMonster(int efeito) {
-        GameObject childObject = porta.transform.Find("CartaPorta").gameObject;
-        Card card = childObject.GetComponent<Card>();
-        card.Power = card.Power + efeito;
-        card.atualiza();
+        DragAndDrop dd = porta.GetComponentInChildren<DragAndDrop>();
+        dd.Power = dd.Power + efeito;
+        dd.atualiza();
     }
 
     public void GameExplosion(Vector3 objectPosition, int power) {
@@ -98,7 +109,6 @@ public class GameManager : MonoBehaviour
         WhoActivate wa = explosao.GetComponent<WhoActivate>();
         wa.SetWho(this.serverIdentity.GetID());
     }
-
     public void EmitExplosion(Vector3 objectPosition, int power) {
         Position pos = new Position();
         pos.x = objectPosition.x;

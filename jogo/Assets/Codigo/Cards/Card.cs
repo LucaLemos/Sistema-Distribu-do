@@ -58,13 +58,13 @@ public class Card : MonoBehaviour {
         if (isMouseOver && Input.GetMouseButtonDown(1)) {
             if(isDragging) {
                 isDragging = false;
-                transform.position = gm.PosiSlot(handIndex);
+                //transform.position = gm.PosiSlot(handIndex);
             }else if(Effect) {
                 Efeito effect = new Efeito();
                 effect.id = gm.serverIdentity.GetID();
                 effect.power = Power;
                 gm.serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(effect));
-                gm.FreeSlot(handIndex);
+                //gm.FreeSlot(handIndex);
                 Destroy(gameObject);
             }
         }
@@ -96,14 +96,14 @@ public class Card : MonoBehaviour {
                 Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
                 Vector3 objectPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-                gm.availableCardsSlots[handIndex] = true;
+                //gm.availableCardsSlots[handIndex] = true;
                 gm.EmitExplosion(objectPosition, Power);
                 gm.GameExplosion(objectPosition, Power);
-                gm.FreeSlot(handIndex);
+                //gm.FreeSlot(handIndex);
                 Destroy(gameObject);
             }else {
                 isDragging = false;
-                transform.position = gm.PosiSlot(handIndex);
+                //transform.position = gm.PosiSlot(handIndex);
             }
         }
     }

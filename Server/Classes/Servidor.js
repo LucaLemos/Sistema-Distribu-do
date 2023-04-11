@@ -5,10 +5,11 @@ const GameLobby = require('./Lobbies/GameLobby');
 const GameLobbySetting = require('./Lobbies/GameLobbySetting');
 
 module.exports = class Servidor {
-    constructor(cards) {
+    constructor(cartasPorta, cartasTesouro){
         this.connection = [];
         this.lobbys = [];
-        this.cards = cards;
+        this.cartasPorta = cartasPorta;
+        this.cartasTesouro = cartasTesouro;
 
         this.lobbys[0] = new LobbyBase(0);
     }
@@ -53,7 +54,6 @@ module.exports = class Servidor {
         //connection.socket.broadcast.to(connection.player.lobby).emit('disconnected', connection.player);
 
         server.lobbys[connection.player.lobby].onLeaveLobby(connection);
-        
     }
 
     onAttemptToJoinGame(connection = Connection) {
@@ -67,7 +67,6 @@ module.exports = class Servidor {
         gamelobbies.forEach(lobby => {
             if(!lobbyFound) {
                 console.log("achou um lobby");
-                console.log(lobby.canEnterLobby(connection));
                 let canJoin = lobby.canEnterLobby(connection);
 
                 if(canJoin) {
@@ -79,7 +78,7 @@ module.exports = class Servidor {
 
         if(!lobbyFound) {
             console.log("Criando um novo lobby");
-            let gamelobby = new GameLobby(gamelobbies.length + 1, new GameLobbySetting('Padrao', 1), server.cards);
+            let gamelobby = new GameLobby(gamelobbies.length + 1, new GameLobbySetting('Padrao', 1), server.cartasPorta, server.cartasTesouro);
             server.lobbys.push(gamelobby);
             server.onSwitchLobby(connection, gamelobby.id);
         }

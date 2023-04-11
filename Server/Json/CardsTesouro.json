@@ -1,0 +1,46 @@
+[  
+    {    
+        "id": "Catsu",
+        "image": "Catsu.jpg",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "body": "",
+        "big": false,
+        "treasure": 0,
+        "level": 0,
+        "power": 5
+    },
+    {    
+        "id": "luffy",
+        "image": "luffy.jpg",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "body": "",
+        "big": false,
+        "treasure": 0,
+        "level": 0,
+        "power": -10
+    },
+    {    
+        "id": "Bota",
+        "image": "boot.png",
+        "deck": "Tesouro",
+        "type": "Item",
+        "body": "boot",
+        "big": false,
+        "treasure": 100,
+        "level": 0,
+        "power": 3
+    },
+    {    
+        "id": "Armadura Grande",
+        "image": "armor.png",
+        "deck": "Tesouro",
+        "type": "Item",
+        "body": "armor",
+        "big": true,
+        "treasure": 200,
+        "level": 0,
+        "power": 8
+    }
+]

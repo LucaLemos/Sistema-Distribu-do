@@ -11,6 +11,7 @@ module.exports = class Connection {
         let socket = connection.socket;
         let server = connection.server;
         let player = connection.player;
+        let lobby = connection.lobby;
 
         socket.on('disconnect', function() {
             server.onDisconnected(connection);
@@ -28,6 +29,19 @@ module.exports = class Connection {
             connection.player.position.y = data.y;
                 
             socket.broadcast.to(connection.lobby.id).emit('move', connection.player);
+        });
+
+        socket.on('getCardTesouro', function() { 
+            console.log("get")       
+            socket.emit('getCard', connection.lobby.getCardTesouro());
+        });
+        socket.on('getCardPorta', function() {        
+            socket.emit('getCard', connection.lobby.getCardPorta());
+        });
+        socket.on('getPorta', function() {    
+            //console.log("entrou?");
+            //console.log(connection.lobby.getCardPorta());
+            socket.emit('getPorta', connection.lobby.getCardPorta());
         });
 
         socket.on('explosion', function(jsonData) {

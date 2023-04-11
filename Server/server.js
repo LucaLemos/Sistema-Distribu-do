@@ -5,9 +5,10 @@ var Carta = require('./Classes/Carta');
 
 console.log('Servidor ligadão!!!');
 
-var cartas = [];
+var cartasPorta = [];
+var cartasTesouro = [];
 
-fs.readFile('Json/Cards.json', 'utf8', (err, data) => {
+fs.readFile('Json/CardsPorta.json', 'utf8', (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -19,18 +20,40 @@ fs.readFile('Json/Cards.json', 'utf8', (err, data) => {
     const cardTest = new Carta();
     cardTest.id = item.id;
     cardTest.image = item.image;
+    cardTest.deck = item.deck;
     cardTest.type = item.type;
-    cardTest.power = item.power;
-    cardTest.effect = item.effect;
-    cardTest.equip = item.equip;
-    cardTest.monster = item.monster;
+    cardTest.body = item.body;
+    cardTest.big = item.big;
     cardTest.treasure = item.treasure;
     cardTest.level = item.level;
-    cartas.push(cardTest);
+    cardTest.power = item.power;
+    cartasPorta.push(cardTest);
+  });
+});
+fs.readFile('Json/CardsTesouro.json', 'utf8', (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  const myList = JSON.parse(data);
+
+  myList.forEach(item => {
+    const cardTest = new Carta();
+    cardTest.id = item.id;
+    cardTest.image = item.image;
+    cardTest.deck = item.deck;
+    cardTest.type = item.type;
+    cardTest.body = item.body;
+    cardTest.big = item.big;
+    cardTest.treasure = item.treasure;
+    cardTest.level = item.level;
+    cardTest.power = item.power;
+    cartasTesouro.push(cardTest);
   });
 });
 
-let server = new Servidor(cartas);
+let server = new Servidor(cartasPorta, cartasTesouro);
 
 setInterval(() => {
   server.onUpdate();

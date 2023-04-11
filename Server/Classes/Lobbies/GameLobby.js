@@ -3,16 +3,17 @@ let GameLobbySetting = require('./GameLobbySetting');
 let Connection = require('../Connection');
 
 module.exports = class gmaeLobby extends LobbyBase {
-    constructor(id, settings = GameLobbySetting, cards) {
+    constructor(id, settings = GameLobbySetting, cartasPorta, cartasTesouro) {
         super(id);
         this.settings = settings;
-        this.cards = cards;
+        this.cartasPorta = cartasPorta;
+        this.cartasTesouro = cartasTesouro;
 
     }
 
     onUpdate() {
         let lobby = this;
-
+        
     }
 
     onEnterLobby(connection = Connection) {
@@ -23,12 +24,11 @@ module.exports = class gmaeLobby extends LobbyBase {
         
         lobby.addPlayer(connection);
         //lidar com o spaw de objetos
-        socket.emit('getCard', this.cards[0]);
-        socket.emit('getCard', this.cards[0]);
-        socket.emit('getCard', this.cards[1]);
-        socket.emit('getCard', this.cards[1]);
-        socket.emit('getCard', this.cards[2]);
-        socket.emit('getPorta', this.cards[2]);
+        //socket.emit('getCard', this.cards[0]);
+        //socket.emit('getCard', this.cards[1]);
+        //socket.emit('getCard', this.cards[2]);
+        //socket.emit('getCard', this.cards[3]);
+        //socket.emit('getPorta', this.cards[4]);
     }
 
     onLeaveLobby(connection = Connection) {
@@ -72,13 +72,27 @@ module.exports = class gmaeLobby extends LobbyBase {
         let maxPlayerCount = lobby.settings.maxPlayers;
         let currentPlayerCount = lobby.connections.length;
 
-        console.log(maxPlayerCount);
-        console.log(currentPlayerCount);
         if(currentPlayerCount + 1 > maxPlayerCount) {
             return false;
         }
 
         return true;
+    }
+
+    getCardPorta() {
+        var max = this.cartasPorta.length;
+        var randomNumber = Math.floor(Math.random() * max);
+        console.log(max + " - " + randomNumber);
+
+        return this.cartasPorta[randomNumber];
+    }
+
+    getCardTesouro() {
+        var max = this.cartasTesouro.length;
+        var randomNumber = Math.floor(Math.random() * max);
+        console.log(max + " - " + randomNumber);
+
+        return this.cartasTesouro[randomNumber];
     }
 
 }

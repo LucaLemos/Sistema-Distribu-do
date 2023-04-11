@@ -9,7 +9,7 @@ public class CardSlot : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) {
         Card card = collision.gameObject.GetComponent<Card>();
         if(!ocupado) {
-            card.gm.FreeSlot(card.handIndex);
+            //card.gm.FreeSlot(card.handIndex);
             card.handIndex = handIndex;
             //Debug.Log("mudou o slot");
             ocupado = true;

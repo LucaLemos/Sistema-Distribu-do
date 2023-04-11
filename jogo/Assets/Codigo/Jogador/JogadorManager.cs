@@ -7,11 +7,11 @@ using UnityEngine;
 public class JogadorManager : MonoBehaviour {
 
     [Header("Dados")]
-    [SerializeField]
     public int level;
     public int power;
-    private float speed = 5;
-    //public Transform movePoint;
+    public Corpo corpo;
+    private float speed = 2F;
+    private float distancia = 0.5F;
     public Vector3 posi;
     public Vector3 posiAndar;
     public LayerMask stopMovement;
@@ -48,12 +48,12 @@ public class JogadorManager : MonoBehaviour {
             if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f ) {
                 animator.SetFloat("X", Input.GetAxisRaw("Horizontal"));
                 animator.SetFloat("Y", Input.GetAxisRaw("Vertical"));
-                Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
+                Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal")*distancia, 0, 0);
                 makeMove(move);
             }else if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f ) {
                 animator.SetFloat("X", Input.GetAxisRaw("Horizontal"));
                 animator.SetFloat("Y", Input.GetAxisRaw("Vertical"));
-                Vector3 move  = new Vector3(0, Input.GetAxisRaw("Vertical"), 0);
+                Vector3 move  = new Vector3(0, Input.GetAxisRaw("Vertical")*distancia, 0);
                 makeMove(move);
             }else {
                 animator.SetBool("Moving", false);

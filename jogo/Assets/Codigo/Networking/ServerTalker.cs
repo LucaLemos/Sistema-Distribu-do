@@ -93,11 +93,12 @@ public class ServerTalker : MonoBehaviour
                 JogadorManager jm = myGameObject.GetComponent<JogadorManager>();
                 jm.level = message.level;
                 jm.power = message.power;
+                jm.corpo = message.corpo;
                 jm.atualizaNome();
 
                 if(id == gameManager.GetComponent<ServerIdentity>().GetID()) {
                     UiInventoryController ic = myGameObject.GetComponent<UiInventoryController>();
-                    ic.inventoryPage = gameManager.inventoryPage;
+                    //ic.inventoryPage = gameManager.inventoryPage;
                 }
 
                 serverObjects.Add(id, jm);
@@ -122,7 +123,7 @@ public class ServerTalker : MonoBehaviour
         io.On("getCard", (data) => {
             var jsonString = data.ToString();
             var message = JsonSerializer.Deserialize<Carta>(jsonString);
-            
+
             Action myAction = () => {
                 gameManager.DrawCard(message);
             };
@@ -197,8 +198,9 @@ public class ServerTalker : MonoBehaviour
 [Serializable]
 public class Jogador {
         public string id { get; set; }
-        public string username { get; set; }
         public Position position { get; set; }
+        public Corpo corpo { get; set; }
+        public string username { get; set; }
         public int power { get; set; }
         public int level { get; set; }
 }
@@ -208,18 +210,26 @@ public class Position {
         public float x { get; set; }
         public float y { get; set; }
 }
+[Serializable]
+public class Corpo {
+        public int helm { get; set; }
+        public int armor { get; set; }
+        public int hands { get; set; }
+        public int boot { get; set; }
+        public int big { get; set; }
+}
 
 [Serializable]
 public class Carta {
         public string id { get; set; }
         public string image { get; set; }
+        public string deck { get; set; }
         public string type { get; set; }
-        public int power { get; set; }
-        public bool effect { get; set; }
-        public bool equip { get; set; }
-        public bool monster { get; set; }
+        public string body { get; set; }
+        public bool big { get; set; }
         public int treasure { get; set; }
         public int level { get; set; }
+        public int power { get; set; }
 }
 
 [Serializable]
