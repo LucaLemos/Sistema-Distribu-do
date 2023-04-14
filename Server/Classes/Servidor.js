@@ -20,6 +20,11 @@ module.exports = class Servidor {
 
         for(let id in server.lobbys) {
             server.lobbys[id].onUpdate();
+            if(server.lobbys[id].id !== 0 && server.lobbys[id].connections.length == 0) {
+                server.lobbys.splice(server.lobbys.indexOf(server.lobbys[id]), 1)
+                console.log("Deletou o lobby " + id);
+                
+            }
         }
     }
     
@@ -78,7 +83,9 @@ module.exports = class Servidor {
 
         if(!lobbyFound) {
             console.log("Criando um novo lobby");
-            let gamelobby = new GameLobby(gamelobbies.length + 1, new GameLobbySetting('Padrao', 1), server.cartasPorta, server.cartasTesouro);
+            let copiedCartasPorta = server.cartasPorta.slice();
+            let copiedCartasTesouro = server.cartasTesouro.slice();
+            let gamelobby = new GameLobby(gamelobbies.length + 1, new GameLobbySetting('Padrao', 2), copiedCartasPorta, copiedCartasTesouro);
             server.lobbys.push(gamelobby);
             server.onSwitchLobby(connection, gamelobby.id);
         }

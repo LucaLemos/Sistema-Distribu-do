@@ -7,8 +7,9 @@ module.exports = class gmaeLobby extends LobbyBase {
         super(id);
         this.settings = settings;
         this.cartasPorta = cartasPorta;
+        this.cartasPortaDescarte = [];
         this.cartasTesouro = cartasTesouro;
-
+        this.cartasTesouroDescarte = [];
     }
 
     onUpdate() {
@@ -82,17 +83,21 @@ module.exports = class gmaeLobby extends LobbyBase {
     getCardPorta() {
         var max = this.cartasPorta.length;
         var randomNumber = Math.floor(Math.random() * max);
-        console.log(max + " - " + randomNumber);
-
-        return this.cartasPorta[randomNumber];
+        var card = this.cartasPorta[randomNumber];
+        this.cartasPortaDescarte.push(card);
+        this.cartasPorta.splice(this.cartasPorta.indexOf(card), 1);
+        
+        return card;
     }
 
     getCardTesouro() {
         var max = this.cartasTesouro.length;
         var randomNumber = Math.floor(Math.random() * max);
-        console.log(max + " - " + randomNumber);
+        var card = this.cartasTesouro[randomNumber];
+        this.cartasTesouroDescarte.push(card);
+        this.cartasTesouro.splice(this.cartasTesouro.indexOf(card), 1);
 
-        return this.cartasTesouro[randomNumber];
+        return card;
     }
 
 }

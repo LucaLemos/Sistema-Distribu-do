@@ -26,13 +26,16 @@ module.exports = class LobbyBase {
         let player = connection.player;
 
         console.log('Player ' + player.displayerPlayerInformation() + ' saiu do lobby: ' + lobby.id);
-
         connection.lobby = undefined;
-
+        
         let index = lobby.connections.indexOf(connection);
         if(index > -1) {
             lobby.connections.splice(index, 1);
         }
+    }
+
+    getPlayer(index) {
+        return this.connections[index].player.id;
     }
 
 }

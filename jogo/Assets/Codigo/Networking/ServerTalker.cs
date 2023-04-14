@@ -23,17 +23,14 @@ public class ServerTalker : MonoBehaviour
     public static string ClientID {get; private set;}
     private Dictionary<string, JogadorManager> serverObjects;
 
-    void Start()
-    {
+    void Start() {
         io = IO.Socket("http://localhost:4080"); 
         //io = IO.Socket("http://192.168.68.139:4080"); 
         inicializar();
         eventos();
-
     }
 
-    void Update()
-    {
+    void Update() {
         if(!RunOnMainThread.IsEmpty)
         {
             while(RunOnMainThread.TryDequeue(out var action))
@@ -93,15 +90,13 @@ public class ServerTalker : MonoBehaviour
                 JogadorManager jm = myGameObject.GetComponent<JogadorManager>();
                 jm.level = message.level;
                 jm.power = message.power;
+                jm.gold = message.gold;
                 jm.corpo = message.corpo;
                 jm.atualizaNome();
 
-                if(id == gameManager.GetComponent<ServerIdentity>().GetID()) {
-                    UiInventoryController ic = myGameObject.GetComponent<UiInventoryController>();
-                    //ic.inventoryPage = gameManager.inventoryPage;
-                }
-
                 serverObjects.Add(id, jm);
+                
+                gameManager.jogadores.Add(jm);
             };
             RunOnMainThread.Enqueue(myAction);
         });
@@ -117,7 +112,38 @@ public class ServerTalker : MonoBehaviour
             //Debug.Log("andou aqui");
             //Debug.Log(id);
             serverObjects[id].posiAndar = new Vector3(x, y, 0);
+        });
 
+        io.On("pronto", (data) => {
+            var jsonString = data.ToString();
+            var message = JsonSerializer.Deserialize<Jogador>(jsonString);
+
+            serverObjects[message.id].Pronto = message.pronto;
+        });
+
+        io.On("jogadorTurno", (data) => {
+            string id = (string)data;
+            
+            gameManager.jogadorAtual =  serverObjects[id];
+
+            Action myAction = () => {
+                gameManager.atualizaLayout();
+            };
+            RunOnMainThread.Enqueue(myAction);
+        });
+
+        io.On("comecarPorta", (data) => {
+            Action myAction = () => {
+                gameManager.ativarCartas();
+                gameManager.menuButtons.SetActive(false);
+            };
+            RunOnMainThread.Enqueue(myAction);
+        });
+        io.On("terminarPorta", (data) => {
+            Action myAction = () => {
+                gameManager.terminarPorta();
+            };
+            RunOnMainThread.Enqueue(myAction);
         });
 
         io.On("getCard", (data) => {
@@ -140,12 +166,12 @@ public class ServerTalker : MonoBehaviour
             RunOnMainThread.Enqueue(myAction);
         });
 
-        io.On("explosion", (data) => {
+        io.On("getRecompensa", (data) => {
             var jsonString = data.ToString();
-            var message = JsonSerializer.Deserialize<Efeito>(jsonString);
+            var message = JsonSerializer.Deserialize<Carta>(jsonString);
             
             Action myAction = () => {
-                gameManager.GameExplosion(new Vector3(message.position.x, message.position.y, 0), 0);
+                gameManager.DrawRecompensa(message);
             };
             RunOnMainThread.Enqueue(myAction);
         });
@@ -168,7 +194,17 @@ public class ServerTalker : MonoBehaviour
             var message = JsonSerializer.Deserialize<Efeito>(jsonString);
 
             Action myAction = () => {
-                gameManager.EffectMonster(message.power);
+                gameManager.EffectMonster(message);
+            };
+            RunOnMainThread.Enqueue(myAction);
+        });
+
+        io.On("explosion", (data) => {
+            var jsonString = data.ToString();
+            var message = JsonSerializer.Deserialize<Explosao>(jsonString);
+            
+            Action myAction = () => {
+                gameManager.GameExplosion(new Vector3(message.position.x, message.position.y, 0), 0, new Efeito());
             };
             RunOnMainThread.Enqueue(myAction);
         });
@@ -179,7 +215,8 @@ public class ServerTalker : MonoBehaviour
 
             Action myAction = () => {
                 JogadorManager jm = serverObjects[message.id];
-                serverObjects.Clear();
+                gameManager.jogadores.Remove(jm);
+                serverObjects.Remove(message.id);
                 DestroyImmediate(jm.gameObject);
             };
             RunOnMainThread.Enqueue(myAction);
@@ -198,11 +235,13 @@ public class ServerTalker : MonoBehaviour
 [Serializable]
 public class Jogador {
         public string id { get; set; }
-        public Position position { get; set; }
-        public Corpo corpo { get; set; }
         public string username { get; set; }
-        public int power { get; set; }
         public int level { get; set; }
+        public int power { get; set; }
+        public int gold { get; set; }
+        public Corpo corpo { get; set; }
+        public Position position { get; set; }
+        public bool pronto { get; set; }
 }
 
 [Serializable]
@@ -216,7 +255,9 @@ public class Corpo {
         public int armor { get; set; }
         public int hands { get; set; }
         public int boot { get; set; }
-        public int big { get; set; }
+        public int grande { get; set; }
+        public string classe { get; set; }
+        public string race { get; set; }
 }
 
 [Serializable]
@@ -225,11 +266,18 @@ public class Carta {
         public string image { get; set; }
         public string deck { get; set; }
         public string type { get; set; }
-        public string body { get; set; }
-        public bool big { get; set; }
+        public string descricao { get; set; }
         public int treasure { get; set; }
         public int level { get; set; }
         public int power { get; set; }
+        public Corpo corpo { get; set; }
+        public Efeito efeito { get; set; }
+}
+
+[Serializable]
+public class Explosao {
+        public Efeito efeito { get; set; }
+        public Position position { get; set; }
 }
 
 [Serializable]
@@ -237,6 +285,9 @@ public class Efeito {
         public string id { get; set; }
         public int power { get; set; }
         public int level { get; set; }
-        public Position position { get; set; }
+        public int treasure { get; set; }
+        public bool destruir { get; set; }
+        public bool monsterOnly { get; set; }
 }
+
 

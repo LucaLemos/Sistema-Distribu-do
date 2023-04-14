@@ -31,38 +31,76 @@ module.exports = class Connection {
             socket.broadcast.to(connection.lobby.id).emit('move', connection.player);
         });
 
-        socket.on('getCardTesouro', function() { 
-            console.log("get")       
+        socket.on('pronto', function(Data) {
+            connection.player.pronto = Data;
+            
+            socket.broadcast.to(connection.lobby.id).emit('pronto', connection.player);
+        });
+
+        socket.on('jogadorTurno', function(Data) {
+            socket.emit('jogadorTurno', connection.lobby.getPlayer(Data));
+            socket.broadcast.to(connection.lobby.id).emit('jogadorTurno', connection.lobby.getPlayer(Data));
+        });
+        socket.on('comecarPorta', function() {
+            socket.broadcast.to(connection.lobby.id).emit('comecarPorta');
+        });
+        socket.on('terminarPorta', function() {
+            socket.emit('terminarPorta');
+            socket.broadcast.to(connection.lobby.id).emit('terminarPorta');
+        });
+
+        socket.on('getCardTesouro', function() {     
             socket.emit('getCard', connection.lobby.getCardTesouro());
         });
         socket.on('getCardPorta', function() {        
             socket.emit('getCard', connection.lobby.getCardPorta());
         });
         socket.on('getPorta', function() {    
-            //console.log("entrou?");
-            //console.log(connection.lobby.getCardPorta());
-            socket.emit('getPorta', connection.lobby.getCardPorta());
+            var card = connection.lobby.getCardPorta()
+            socket.emit('getPorta', card);
+            socket.broadcast.to(connection.lobby.id).emit('getPorta', card);
+        });
+        socket.on('getRecompensa', function() {    
+            var card = connection.lobby.getCardTesouro();
+            socket.emit('getRecompensa', card);
+        });
+
+        socket.on('effect', function(jsonData) {
+            const data = JSON.parse(jsonData);
+
+            connection.lobby.connections.forEach(element => {
+                if(element.player.id == data.id) {
+                    element.player.dealEffect(data);
+                    
+                    socket.emit('effect', element.player);
+                    socket.broadcast.to(connection.lobby.id).emit('effect', element.player);
+                }
+            });
+        });
+        socket.on('zerarPoder', function(jsonData) {
+            const data = JSON.parse(jsonData);
+            
+            connection.lobby.connections.forEach(element => {
+                if(element.player.id == data.id) {
+                    element.player.setPower(data.power);
+                    
+                    socket.emit('effect', element.player);
+                    socket.broadcast.to(connection.lobby.id).emit('effect', element.player);
+                }
+            });
+        });
+        
+        socket.on('effectMonster', function(jsonData) {
+            const data = JSON.parse(jsonData);
+            
+            socket.emit('effectMonster', data);
+            socket.to(connection.lobby.id).broadcast.emit('effectMonster', data);
         });
 
         socket.on('explosion', function(jsonData) {
             const data = JSON.parse(jsonData);
             
             socket.broadcast.to(connection.lobby.id).emit('explosion', data);
-        });
-        
-        socket.on('effect', function(jsonData) {
-            const data = JSON.parse(jsonData);
-            
-            connection.player.dealEffect(data.power);
-            socket.emit('effect', connection.player);
-            socket.broadcast.to(connection.lobby.id).emit('effect', connection.player);
-        });
-
-        socket.on('effectMonster', function(jsonData) {
-            const data = JSON.parse(jsonData);
-            
-            socket.emit('effectMonster', data);
-            socket.to(connection.lobby.id).broadcast.emit('effectMonster', data);
         });
 
     }

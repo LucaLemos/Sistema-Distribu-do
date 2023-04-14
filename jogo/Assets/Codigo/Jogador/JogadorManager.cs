@@ -9,22 +9,29 @@ public class JogadorManager : MonoBehaviour {
     [Header("Dados")]
     public int level;
     public int power;
+    public int gold;
     public Corpo corpo;
+
+    [Header("Dados Internos")]
+    public Vector3 posi;
     private float speed = 2F;
     private float distancia = 0.5F;
-    public Vector3 posi;
     public Vector3 posiAndar;
     public LayerMask stopMovement;
     private Animator animator;
 
+    [Header("Gameplay")]
+    public bool Pronto;
+
     [Header("Server Identity")]
     [SerializeField]
-    private ServerIdentity serverIdentity;
+    public ServerIdentity serverIdentity;
 
     void Start() {
         posi = transform.position;
         posiAndar = transform.position;
         animator = GetComponent<Animator>();
+        Pronto = false;
     }
 
     void Update() {
@@ -78,4 +85,14 @@ public class JogadorManager : MonoBehaviour {
         TMP_Text textMash = childObject.GetComponent<TMP_Text>();
         textMash.text = "LV:" + level + " Pw:" + power;
     }
+
+    public void prontoAtv() {
+        if(Pronto) {
+            Pronto = false;
+        }else {
+            Pronto = true;
+        }
+        serverIdentity.GetSocket().Emit("pronto", Pronto);
+    }
+
 }

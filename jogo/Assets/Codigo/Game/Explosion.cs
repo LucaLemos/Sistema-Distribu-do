@@ -12,6 +12,7 @@ public class Explosion : MonoBehaviour {
     private WhoActivate whoActivate;
 
     public int Power;
+    public Efeito efeito;
 
     public void DestroyObject() {
         Destroy(gameObject);
@@ -30,17 +31,19 @@ public class Explosion : MonoBehaviour {
         }
         
         if(Power != 0 && si != null) {
-            if(si.GetID() != "" && si.GetID() != "1") {
+            if(si.GetID() != "" && si.GetID() != "1" && !efeito.monsterOnly) {
                 Efeito effect = new Efeito();
                 effect.id = si.GetID();
                 effect.power = Power;
 
+                Debug.Log(effect.id);
                 serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(effect));
             }
-            else if(si.GetID() == "1") {
+            else if(si.GetID() == "1" && efeito.monsterOnly) {
                 Efeito effect = new Efeito();
                 effect.id = si.GetID();
                 effect.power = Power;
+                effect.treasure = efeito.treasure;
 
                 serverIdentity.GetSocket().Emit("effectMonster", JsonSerializer.Serialize(effect));
             }

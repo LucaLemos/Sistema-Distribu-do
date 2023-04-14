@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CardSlot : MonoBehaviour {
-    public int handIndex;
-    public bool ocupado;
+public class CardSlot : MonoBehaviour, IDropHandler {
+    public bool desativado;
+    public bool equipSlot;
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        Card card = collision.gameObject.GetComponent<Card>();
-        if(!ocupado) {
-            //card.gm.FreeSlot(card.handIndex);
-            card.handIndex = handIndex;
-            //Debug.Log("mudou o slot");
-            ocupado = true;
+    public void OnDrop(PointerEventData eventData) {
+        if(!desativado) {
+            if(transform.childCount == 0) {
+                Card card = eventData.pointerDrag.GetComponent<Card>();
+                if(equipSlot) {
+                    if(card.Type == "Equip" || card.equipado) {
+                        card.parentAfterDrag = transform;
+                    }
+                }else {
+                    if(!card.equipado) {
+                        card.parentAfterDrag = transform;
+                    }
+                }
+            }
         }
     }
 }

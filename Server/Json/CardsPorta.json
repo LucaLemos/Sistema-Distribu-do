@@ -4,10 +4,66 @@
         "image": "yuno.jpg",
         "deck": "Porta",
         "type": "Monster",
-        "body": "",
-        "big": false,
+        "descricao": "Monstro yuno de teste, Tira um nivel do jogador",
         "treasure": 2,
         "level": 1,
-        "power": 5
+        "power": 5,
+        "corpo": {
+            "helm": 0,
+            "armor": 0,
+            "hands": 0,
+            "boot": 0,
+            "grande": 0,
+            "classe": "Guerreiro"
+        },
+        "efeito": {
+            "power": 0,
+            "level": -1
+        }
+    },
+    {    
+        "id": "Maldição! Neuramancer",
+        "image": "neuromancer.jpg",
+        "deck": "Porta",
+        "type": "Curse",
+        "descricao": "Remove a classe",
+        "corpo": {
+            "classe": "Destruir"
+        },
+        "efeito": {
+            "destruir": true
+        }
+    },
+    {    
+        "id": "Bonus Neuramancer",
+        "image": "neuromancer.jpg",
+        "deck": "Porta",
+        "type": "Effect",
+        "descricao": "+10 para o monstro, se o monstro for derrotado +2 tesouros",
+        "power": 10,
+        "efeito": {
+            "treasure": 2,
+            "monsterOnly": true
+        }
+    },
+    {    
+        "id": "Guerreiro",
+        "image": "Catsu.jpg",
+        "deck": "Porta",
+        "type": "Classe",
+        "descricao": "Guerreiro do espadao",
+        "corpo": {
+            "classe": "Guerreiro"
+        }
+    },
+    {    
+        "id": "Halfling",
+        "image": "Catsu.jpg",
+        "deck": "Porta",
+        "type": "Race",
+        "descricao": "Pequeno e peludo!",
+        "corpo": {
+            "race": "Halfling"
+        }
     }
 ]

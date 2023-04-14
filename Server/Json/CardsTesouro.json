@@ -4,43 +4,66 @@
         "image": "Catsu.jpg",
         "deck": "Tesouro",
         "type": "Effect",
-        "body": "",
-        "big": false,
+        "descricao": "Bonk, mais 8 de poder",
         "treasure": 0,
         "level": 0,
-        "power": 5
+        "power": 8,
+        "corpo": {
+            "helm": 0,
+            "armor": 0,
+            "hands": 0,
+            "boot": 0,
+            "grande": 0
+        },
+        "efeito": {
+            "power": 0,
+            "level": 0
+        }
     },
     {    
         "id": "luffy",
         "image": "luffy.jpg",
         "deck": "Tesouro",
         "type": "Effect",
-        "body": "",
-        "big": false,
+        "descricao": "Tira 2 de poder de qualquer alvo",
         "treasure": 0,
         "level": 0,
-        "power": -10
+        "power": -2,
+        "corpo": {
+            "helm": 0,
+            "armor": 0,
+            "hands": 0,
+            "boot": 0,
+            "grande": 0
+        },
+        "efeito": {
+            "power": 0,
+            "level": 0
+        }
     },
     {    
         "id": "Bota",
         "image": "boot.png",
         "deck": "Tesouro",
-        "type": "Item",
-        "body": "boot",
-        "big": false,
+        "type": "Equip",
+        "descricao": "Uma bota",
         "treasure": 100,
-        "level": 0,
-        "power": 3
+        "power": 3,
+        "corpo": {
+            "boot": 1
+        }
     },
     {    
         "id": "Armadura Grande",
         "image": "armor.png",
         "deck": "Tesouro",
-        "type": "Item",
-        "body": "armor",
-        "big": true,
+        "type": "Equip",
+        "descricao": "Uma armadura",
         "treasure": 200,
-        "level": 0,
-        "power": 8
+        "power": 8,
+        "corpo": {
+            "armor": 1,
+            "grande": 1
+        }
     }
 ]
