@@ -288,6 +288,7 @@ public class Efeito {
         public int treasure { get; set; }
         public bool destruir { get; set; }
         public bool monsterOnly { get; set; }
+        public bool playerOnly { get; set; }
 }
 
 

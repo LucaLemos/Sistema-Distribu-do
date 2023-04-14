@@ -1,44 +1,258 @@
 [  
     {    
-        "id": "Catsu",
-        "image": "Catsu.jpg",
+        "id": "Bandana de Machão",
+        "image": "helm.png",
         "deck": "Tesouro",
-        "type": "Effect",
-        "descricao": "Bonk, mais 8 de poder",
-        "treasure": 0,
-        "level": 0,
-        "power": 8,
+        "type": "Equip",
+        "descricao": "Uma bandana muito masscula",
+        "treasure": 400,
+        "power": 3,
         "corpo": {
-            "helm": 0,
-            "armor": 0,
-            "hands": 0,
-            "boot": 0,
-            "grande": 0
-        },
-        "efeito": {
-            "power": 0,
-            "level": 0
+            "helm": 1
         }
     },
     {    
-        "id": "luffy",
-        "image": "luffy.jpg",
+        "id": "Chapéu de Bruxo do Poder",
+        "image": "helm.png",
         "deck": "Tesouro",
-        "type": "Effect",
-        "descricao": "Tira 2 de poder de qualquer alvo",
-        "treasure": 0,
-        "level": 0,
-        "power": -2,
+        "type": "Equip",
+        "descricao": "Griiiiiiiiifinória",
+        "treasure": 400,
+        "power": 3,
         "corpo": {
-            "helm": 0,
-            "armor": 0,
-            "hands": 0,
-            "boot": 0,
-            "grande": 0
-        },
-        "efeito": {
-            "power": 0,
-            "level": 0
+            "helm": 1
+        }
+    },
+    {    
+        "id": "Elmo Chifrudo",
+        "image": "helm.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Cuidado para não se furar",
+        "treasure": 600,
+        "power": 3,
+        "corpo": {
+            "helm": 1
+        }
+    },
+    {    
+        "id": "Elmo da Coragem",
+        "image": "helm.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Tatake",
+        "treasure": 200,
+        "power": 1,
+        "corpo": {
+            "helm": 1
+        }
+    },
+    {    
+        "id": "Arco com Fitinhas",
+        "image": "bow.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Bonitinho",
+        "treasure": 800,
+        "power": 4,
+        "corpo": {
+            "hands": 2
+        }
+    },
+    {    
+        "id": "Broquel da Bravata",
+        "image": "shield.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Chique e bonito, não funcional",
+        "treasure": 400,
+        "power": 2,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Escudo Onipresente",
+        "image": "shield.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Escudo GRANDE",
+        "treasure": 600,
+        "power": 4,
+        "corpo": {
+            "hands": 1,
+            "grande": 1
+        }
+    },
+    {    
+        "id": "Lança Muito Grande",
+        "image": "stick.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Lança muito longo",
+        "treasure": 200,
+        "power": 1,
+        "corpo": {
+            "hands": 2
+        }
+    },
+    {    
+        "id": "Espetinho de Rato",
+        "image": "stick.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Porque?",
+        "treasure": 0,
+        "power": 1,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Cajado de Napalm",
+        "image": "stick.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "MAGICO!",
+        "treasure": 800,
+        "power": 5,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Cacete",
+        "image": "bonk.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Bonk",
+        "treasure": 400,
+        "power": 3,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Pedra Gigante",
+        "image": "bonk.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "BE uma pedra muito grande",
+        "treasure": 0,
+        "power": 3,
+        "corpo": {
+            "hands": 2,
+            "grande": 1
+        }
+    },
+    {    
+        "id": "Ralador de Queijo da Paz",
+        "image": "bonk.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "???",
+        "treasure": 400,
+        "power": 3,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Martelo Detona Joelho",
+        "image": "bonk.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Martela Martela Martela",
+        "treasure": 600,
+        "power": 4,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Maça Afiada",
+        "image": "bonk.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "",
+        "treasure": 600,
+        "power": 4,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Alabarda Suiça",
+        "image": "bonk.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "",
+        "treasure": 600,
+        "power": 4,
+        "corpo": {
+            "hands": 2,
+            "grande": 1
+        }
+    },
+    {    
+        "id": "Serra Eletrica",
+        "image": "bonk.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "Randamdamdamdam",
+        "treasure": 600,
+        "power": 3,
+        "corpo": {
+            "hands": 2,
+            "grande": 1
+        }
+    },
+    {    
+        "id": "Espada Bastarta Traiçoeira",
+        "image": "Sword.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "",
+        "treasure": 400,
+        "power": 2,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Espa-Dona",
+        "image": "Sword.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "",
+        "treasure": 400,
+        "power": 3,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Adaga",
+        "image": "Sword.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "",
+        "treasure": 400,
+        "power": 3,
+        "corpo": {
+            "hands": 1
+        }
+    },
+    {    
+        "id": "Florete da Injustiça",
+        "image": "Sword.png",
+        "deck": "Tesouro",
+        "type": "Equip",
+        "descricao": "",
+        "treasure": 600,
+        "power": 3,
+        "corpo": {
+            "hands": 1
         }
     },
     {    
@@ -47,8 +261,8 @@
         "deck": "Tesouro",
         "type": "Equip",
         "descricao": "Uma bota",
-        "treasure": 100,
-        "power": 3,
+        "treasure": 400,
+        "power": 2,
         "corpo": {
             "boot": 1
         }
@@ -64,6 +278,215 @@
         "corpo": {
             "armor": 1,
             "grande": 1
+        }
+    },
+    {    
+        "id": "Coção de Ponfusão",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 3 para qualquer um!",
+        "power": 3,
+        "efeito": {
+            "power": 3
+        }
+    },
+    {    
+        "id": "Poção Acida Eletrorradioativa",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 5 para qualquer um!",
+        "power": 5,
+        "efeito": {
+            "power": 5
+        }
+    },
+    {    
+        "id": "Poção Flamejante",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 3 para qualquer um!",
+        "power": 3,
+        "efeito": {
+            "power": 3
+        }
+    },
+    {    
+        "id": "Poção Explosiva Congelante",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 3 para qualquer um!",
+        "power": 3,
+        "efeito": {
+            "power": 3
+        }
+    },
+    {    
+        "id": "Missil Mágico",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 5 para qualquer um!",
+        "power": 5,
+        "efeito": {
+            "power": 5
+        }
+    },
+    {    
+        "id": "Isotonico Sabor Enxofre",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 2 para qualquer um!",
+        "power": 2,
+        "efeito": {
+            "power": 2
+        }
+    },
+    {    
+        "id": "Poção de Halitose",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 2 para qualquer um!",
+        "power": 2,
+        "efeito": {
+            "power": 2
+        }
+    },
+    {    
+        "id": "Poção da Coragem Estupida",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 2 para qualquer um!",
+        "power": 2,
+        "efeito": {
+            "power": 2
+        }
+    },
+    {    
+        "id": "Poção Bonitinha",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 5 para qualquer um!",
+        "power": 5,
+        "efeito": {
+            "power": 5
+        }
+    },
+    {    
+        "id": "Poção do Sono",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 2 para qualquer um!",
+        "power": 2,
+        "efeito": {
+            "power": 2
+        }
+    },
+    {    
+        "id": "Agua Mineral de Marca",
+        "image": "Potion.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Mais 2 para qualquer um!",
+        "power": 2,
+        "efeito": {
+            "power": 2
+        }
+    },
+    {    
+        "id": "1000 Ouro",
+        "image": "levelup.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Suba um nivel",
+        "efeito": {
+            "level": 1,
+            "playerOnly": true
+        }
+    },
+    {    
+        "id": "Massacre de Formigas",
+        "image": "levelup.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Suba um nivel",
+        "efeito": {
+            "level": 1,
+            "playerOnly": true
+        }
+    },
+    {    
+        "id": "Subornar o Mestre",
+        "image": "levelup.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Suba um nivel",
+        "efeito": {
+            "level": 1,
+            "playerOnly": true
+        }
+    },
+    {    
+        "id": "Erro de Soma",
+        "image": "levelup.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Suba um nivel",
+        "efeito": {
+            "level": 1,
+            "playerOnly": true
+        }
+    },
+    {    
+        "id": "Invocar Regras Obscuras",
+        "image": "levelup.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Suba um nivel",
+        "efeito": {
+            "level": 1,
+            "playerOnly": true
+        }
+    },
+    {    
+        "id": "Mutilar os Cadáveres",
+        "image": "levelup.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Suba um nivel",
+        "efeito": {
+            "level": 1,
+            "playerOnly": true
+        }
+    },
+    {    
+        "id": "Poção de Virar Macho",
+        "image": "levelup.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Suba um nivel",
+        "efeito": {
+            "level": 1,
+            "playerOnly": true
+        }
+    },
+    {    
+        "id": "Choramingar um Nível",
+        "image": "levelup.png",
+        "deck": "Tesouro",
+        "type": "Effect",
+        "descricao": "Suba um nivel",
+        "efeito": {
+            "level": 1,
+            "playerOnly": true
         }
     }
 ]

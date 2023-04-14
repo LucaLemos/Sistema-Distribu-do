@@ -43,6 +43,7 @@ public class Explosion : MonoBehaviour {
                 Efeito effect = new Efeito();
                 effect.id = si.GetID();
                 effect.power = Power;
+                effect.level = efeito.level;
                 effect.treasure = efeito.treasure;
 
                 serverIdentity.GetSocket().Emit("effectMonster", JsonSerializer.Serialize(effect));

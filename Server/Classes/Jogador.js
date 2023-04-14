@@ -23,7 +23,7 @@ module.exports = class Jogador {
     }
 
     dealEffect(effect = Efeito) {
-        if(this.level > 1) {
+        if(this.level >= 1) {
             this.level = this.level + effect.level;
         }
         this.power = this.power + effect.power;

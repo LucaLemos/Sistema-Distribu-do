@@ -96,6 +96,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
             actionPanel.AddButon("Descartar", destruir);
         }
+        if(Type == "Effect") {
+            if(!this.efeito.monsterOnly) {
+                actionPanel.AddButon("Usar", usarEfeito);
+            }
+            actionPanel.AddButon("Descartar", destruir);
+        }
         if(Type == "Classe") {
             poder.text = "";
 
@@ -162,12 +168,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(!porta) {
             image.raycastTarget = true;
             transform.SetParent(parentAfterDrag);
-            if(Type == "Effect" && gm.CartasAtivas) {
+            if(Type == "Effect" && gm.CartasAtivas && !efeito.playerOnly) {
                     Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
                     Vector3 objectPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
                     gm.EmitExplosion(objectPosition);
-                    gm.GameExplosion(objectPosition, Power, efeito);
+                    gm.GameExplosion(objectPosition, efeito.power, efeito);
                     destruir();
             }
         }
@@ -177,13 +183,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(!porta) {
             if (eventData.button == PointerEventData.InputButton.Right) {
                 actionPanel.Toggle(true);
-                //if(Type == "Effect" && gm.CartasAtivas) {
-                //    Efeito effect = new Efeito();
-                //    effect.id = gm.serverIdentity.GetID();
-                //    effect.power = Power;
-                //    gm.serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(effect));
-                //    destruir();
-                //}
             }
         }
         if (eventData.button == PointerEventData.InputButton.Left) {
@@ -203,6 +202,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void vender() {
         gm.venderItem(this);
+    }
+
+    public void usarEfeito() {
+        this.efeito.id = gm.serverIdentity.GetID();
+        gm.serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(this.efeito));
+        destruir();
     }
 
     public void equipar() {

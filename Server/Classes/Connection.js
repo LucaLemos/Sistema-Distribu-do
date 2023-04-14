@@ -67,11 +67,11 @@ module.exports = class Connection {
 
         socket.on('effect', function(jsonData) {
             const data = JSON.parse(jsonData);
-
             connection.lobby.connections.forEach(element => {
                 if(element.player.id == data.id) {
+                    console.log(data);
                     element.player.dealEffect(data);
-                    
+
                     socket.emit('effect', element.player);
                     socket.broadcast.to(connection.lobby.id).emit('effect', element.player);
                 }

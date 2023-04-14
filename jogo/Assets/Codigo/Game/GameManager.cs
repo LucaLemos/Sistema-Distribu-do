@@ -179,17 +179,36 @@ public class GameManager : MonoBehaviour
         }
         if(PortaInSlot.Type == "Curse") {
             PortaInSlot.efeito.id = jogadorAtual.serverIdentity.GetID();
-            Debug.Log(PortaInSlot.efeito.destruir);
             if(PortaInSlot.efeito.destruir) {
                 removerItem(PortaInSlot.corpo);
             }
             serverIdentity.GetSocket().Emit("effect", JsonSerializer.Serialize(PortaInSlot.efeito));
         }
+        if(PortaInSlot.Type == "Effect") {
+            SetRecompensa(PortaInSlot);
+            buttons.SetActive(false);
+            recompensaMenu.SetActive(true);
+        }
+        if(PortaInSlot.Type == "Classe") {
+            SetRecompensa(PortaInSlot);
+            buttons.SetActive(false);
+            recompensaMenu.SetActive(true);
+        }
+        if(PortaInSlot.Type == "Race") {
+            SetRecompensa(PortaInSlot);
+            buttons.SetActive(false);
+            recompensaMenu.SetActive(true);
+        }
     }
     public void terminarPorta() {
-        Card PortaInSlot = porta.GetComponentInChildren<Card>();
+        try {
+            Card PortaInSlot = porta.GetComponentInChildren<Card>();
+            PortaInSlot.destruir();
+        }catch (Exception ex) {
+            Console.WriteLine("An exception occurred: " + ex.Message);
+        }
+        
         availablePorta = true;
-        PortaInSlot.destruir();
         ResetarPoder();
         ProximoJogador();
         ativarCartas();
@@ -246,7 +265,6 @@ public class GameManager : MonoBehaviour
             CardSlot slot = inventario[i];
             Card itemInSlot = slot.GetComponentInChildren<Card>();
             if(itemInSlot != null && itemInSlot.equipado) {
-                Debug.Log(itemInSlot.parteDoCorpo(corpo) + " - " + itemInSlot.parteDoCorpo(itemInSlot.corpo));
                 if(itemInSlot.parteDoCorpo(corpo) == itemInSlot.parteDoCorpo(itemInSlot.corpo) ) {
                     itemInSlot.desquipar();
                     itemInSlot.destruir();
@@ -382,6 +400,18 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void SetRecompensa(Card carta) {
+        for(int i = 0; i < recompensa.Length; i++) {
+            CardSlot slot = recompensa[i];
+            Card itemInSlot = slot.GetComponentInChildren<Card>();
+            if(itemInSlot == null) {
+                carta.transform.SetParent(slot.transform);
+                carta.porta = false;
+
+                return;
+            }
+        }
+    }
 
     //effect function
     public void EffectMonster(Efeito efeito) {
@@ -424,7 +454,7 @@ public class GameManager : MonoBehaviour
         }else {
             jogando = 0;
         }
-        //Debug.Log(jogando);
+        
         serverIdentity.GetSocket().Emit("jogadorTurno", jogando);
     }
 

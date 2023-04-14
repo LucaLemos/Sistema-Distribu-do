@@ -6,5 +6,6 @@ module.exports = class Efeito {
         this.treasure = new Number(0);
         this.destruir = false;
         this.monsterOnly = false;
+        this.playerOnly = false;
     }
 }
